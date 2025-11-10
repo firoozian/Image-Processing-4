@@ -1,48 +1,80 @@
-🏎️ Vehicle Detection — GPU-Accelerated YOLOv8 Model  
-This project builds an end-to-end computer vision pipeline to detect and classify vehicles (car, motorcycle, bus, truck) in images, folders, and videos using Ultralytics YOLOv8. It focuses on clean structure, automatic path handling, and GPU-optimized inference for fast and accurate detection.
+# 🏎️ Vehicle Detection — GPU-Accelerated YOLOv8 Inference & Evaluation
 
-🚀 Key Features  
-Data Handling & Structure  
-- Auto-detects dataset structure (`train` / `valid`) under project root.  
-- Falls back automatically if a folder is missing.  
-- Loads sample image/video dynamically for quick testing.
+This project builds an end-to-end computer vision pipeline to **detect and classify vehicles** (car, motorcycle, bus, truck) in images, folders, and videos using **Ultralytics YOLOv8-Large**.  
+It focuses on clean structure, GPU-optimized inference, and automatic evaluation with confidence metrics and per-class visualization.
 
-Inference Pipeline  
-- Runs detection on a single image, a full folder, and a sample video.  
-- Uses pretrained YOLOv8-Large (`yolov8l.pt`) weights.  
-- Saves all outputs under `runs/detect/<step_name>` with bounding boxes and labels.  
+---
 
-Model Parameters  
+## 🚀 Key Features
+
+### 📂 Data Handling & Structure
+- Auto-detects dataset layout (`train / valid`) under the project root.
+- Falls back automatically if a folder is missing.
+- Dynamically selects a sample image or video for quick testing.
+
+### 🎯 Inference Pipeline
+- Runs detection on:
+  - A **single image**
+  - A **folder of test images**
+  - A **sample video**
+- Uses pretrained weights `yolov8l.pt`.
+- Saves annotated results to:  
+  `runs/detect/<step_name>` → includes bounding boxes, labels, and confidence scores.
+
+### ⚙️ Model Parameters
+
 | Parameter | Value | Description |
 |------------|--------|-------------|
-| `imgsz` | 1280 | Input image resolution |
-| `conf` | 0.45 | Minimum confidence threshold |
-| `iou` | 0.80 | IoU threshold for NMS |
-| `classes` | [2,3,5,7] | COCO IDs: car, motorcycle, bus, truck |
-| `device` | 0 | GPU index (set `'cpu'` to disable CUDA) |
-| `augment` | True | Test-time augmentation |
+| imgsz | 1280 | Input image resolution |
+| conf | 0.45 | Minimum confidence threshold |
+| iou | 0.80 | IoU threshold for NMS |
+| classes | [2,3,5,7] | COCO IDs → car, motorcycle, bus, truck |
+| device | 0 | GPU index (set `'cpu'` to disable CUDA) |
+| augment | True | Test-time augmentation |
 
-📊 Results Summary  
-- **Image:** Detects and labels all visible vehicles.  
-- **Folder:** Processes multiple frames efficiently.  
-- **Video:** Produces annotated MP4 with tracked detections.  
-All results saved automatically to `runs/detect/`.
+---
 
-🧠 Tech Stack  
-Language: Python (3.10+)  
-Libraries: Ultralytics, OpenCV, NumPy, Pathlib  
-Hardware: NVIDIA GPU (CUDA-enabled)  
-Model: YOLOv8-Large (`yolov8l.pt`)
+## 📊 Evaluation Summary
 
-💾 Output
+Evaluated pretrained YOLOv8-Large on 10+ test images.
 
-Image → runs/detect/step1_image_overlap/
+| Metric | Result |
+|---------|--------|
+| Mean confidence (all detections) | **0.7624** |
+| Detected cars | **224** |
+| Detected trucks | **22** |
+| Detected buses | **13** |
+| Detected motorcycles | **3** |
 
-Folder → runs/detect/step2_folder_overlap/
+**Outputs saved to:**
+- CSV report → `runs/eval/yolov8_inference_eval.csv`  
+- Per-class bar plot → `runs/eval/detections_per_class.png`  
+- Summary JSON → `runs/eval/summary.json`  
 
-Video → runs/detect/step3_video_fast_gpu/
+---
 
-📚 Author
+## 🧠 Tech Stack
 
-Sina Firoozian
-📧 [sina.firuzian@gmail.com]
+- **Language:** Python (3.10+)  
+- **Libraries:** Ultralytics, OpenCV, NumPy, pandas, matplotlib, Pathlib  
+- **Hardware:** NVIDIA GPU (CUDA-enabled)  
+- **Model:** YOLOv8-Large (`yolov8l.pt`)
+
+---
+
+## 💾 Output Paths
+
+| Type | Output Folder |
+|------|----------------|
+| Image | `runs/detect/step1_image_overlap/` |
+| Folder | `runs/detect/step2_folder_overlap/` |
+| Video | `runs/detect/step3_video/` |
+| Evaluation | `runs/eval/` |
+
+---
+
+## 👨‍💻 Author
+
+**Sina Firoozian**  
+📧 [sina.firuzian@gmail.com]  
+
